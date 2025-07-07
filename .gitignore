@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.egg
+*.log
+
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+*.env
+*.env.*
+
+# Django
+
+media/
+staticfiles/
+*.pot
+*.mo
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Pytest
+.cache/
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+
+# Migrations (optional to ignore)
+# Uncomment below if you don't want migrations in version control
+# **/migrations/
+# !**/migrations/__init__.py
+
+# Logs
+logs/
+*.log
+
+# Local settings
+local_settings.py
+
+# Node (if using npm/yarn for frontend)
+node_modules/
+dist/
+build/
+*.lock
+
+# JetBrains IDEs
+.idea/
+
+# Others
+*.bak
+*.swp
+*.swo
