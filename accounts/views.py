@@ -9,7 +9,7 @@ from .serializers import (
     LogoutSerializer,
 )
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import status
 import pyotp
 from django.core.mail import send_mail
@@ -127,22 +127,22 @@ class LoginView(GenericAPIView):
 
 
 # View for Logout
+from rest_framework.permissions import AllowAny
+
+
 class LogoutView(GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = [AllowAny]  # Don't require auth to hit logout
 
     def post(self, request):
-        serializer = LogoutSerializer(data=request.data)
-        user = request.user
+        serializer = self.serializer_class(data=request.data)
+
         if serializer.is_valid():
+            refresh_token = serializer.validated_data["refresh"]
+
             try:
-                refresh_token = serializer.validated_data["refresh"]
                 token = RefreshToken(refresh_token)
-                token.blacklist()  # Blacklist the refresh token
-                # Make the user to be inactive
-                user.is_active = False
-                user.save()
-                return Response(
-                    {"message": "Successfully logged out"}, status=status.HTTP_200_OK
-                )
+                token.blacklist()
             except TokenError as e:
                 return Response(
                     {"error": f"Invalid token: {str(e)}"},
@@ -153,6 +153,17 @@ class LogoutView(GenericAPIView):
                     {"error": f"Logout failed: {str(e)}"},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
+
+            # Optionally deactivate user if authenticated
+            if request.user.is_authenticated:
+                request.user.is_active = False
+                request.user.save()
+
+            return Response(
+                {"message": "Successfully logged out"},
+                status=status.HTTP_200_OK,
+            )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -177,7 +188,7 @@ class PasswordResetRequestView(GenericAPIView):
             otp_code = totp.now()
 
             #  Save OTP record
-            
+
             PasswordResetToken.objects.filter(
                 user=user, is_verified=False
             ).delete()  # Clear any old

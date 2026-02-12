@@ -1,71 +1,39 @@
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.pyc
-*.pdb
-*.egg-info/
 *.egg
-*.log
+*.egg-info/
+dist/
+build/
+.eggs/
 
-# Virtual Environment
+# Virtual environment
 .venv/
 env/
 venv/
-ENV/
-*.env
-*.env.*
+.env
 
-# Django
-
+# Django stuff
+*.log
+db.sqlite3
 media/
 staticfiles/
-*.pot
-*.mo
+local_settings.py
 
 # VS Code
 .vscode/
 
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
 # Pytest
-.cache/
+.pytest_cache/
 
-# Coverage reports
-htmlcov/
-coverage.xml
-*.cover
-*.py,cover
+# MyPy
+.mypy_cache/
 
-# Migrations (optional to ignore)
-# Uncomment below if you don't want migrations in version control
-# **/migrations/
-# !**/migrations/__init__.py
+# OS files
+.DS_Store
+Thumbs.db
 
-# Logs
-logs/
-*.log
+# dotenv
+.env
 
-# Local settings
-local_settings.py
-
-# Node (if using npm/yarn for frontend)
-node_modules/
-dist/
-build/
-*.lock
-
-# JetBrains IDEs
-.idea/
-
-# Others
-*.bak
-*.swp
-*.swo
+db.sqlite3

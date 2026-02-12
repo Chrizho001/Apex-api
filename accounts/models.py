@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         return self.email
 
-    @property
+    
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
 
